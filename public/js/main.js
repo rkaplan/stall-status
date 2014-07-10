@@ -15,10 +15,6 @@ stallRects = [
     [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}]
 ];
 
-// var svg = d3.select('#stalls').append('svg')
-//             .attr('width', 800)
-//             .attr('height', 400);
-
 $.get('/rooms', function(data) {
     console.log(data);
     bathrooms = data['bathroom_names'];
