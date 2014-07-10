@@ -13,8 +13,18 @@ app.post('/api', function(req, res) {
 	console.log('hello');
 });
 
+app.get('/rooms', function(req, res) {
+	// send list of all bathrooms
+	res.send({status: 200, bathroom_names: ['NYC Men\'s 5th Floor', 'NYC Women\'s NYC 5th Floor']});
+});
+
 io.on('connection', function(socket) {
+	// socket.emit('room_name', )
 	setInterval(function() {
-		socket.emit('hello', 'message');
-	}, 1000);
+		if (Math.random() > 0.5) {
+			socket.emit('stall_open', { stall_id : Math.floor(Math.random() * 4)})
+		} else {
+			socket.emit('stall_close', { stall_id : Math.floor(Math.random() * 4)})
+		}
+	}, 5000);
 })
