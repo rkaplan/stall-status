@@ -1,0 +1,22 @@
+body {
+    background-color: #ffffff;
+    /*padding-top: 50px;*/
+}
+
+h1 {
+    font-size: 48px;
+}
+
+.container {
+    text-align: center;
+}
+
+.heading {
+  padding: 30px 15px;
+  text-align: center;
+}
+
+#stalls {
+    width: 1000px;
+    margin: 0 auto;
+}

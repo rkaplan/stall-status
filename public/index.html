@@ -1,50 +1,47 @@
-<html>
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Bathroom Stall Status | MongoDB</title>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
     <script src="/components/socket.io-client/socket.io.js"></script>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="heading">
+        <h1>Bathroom Stall Status</h1>
+        <p class="lead">Know before you go.</p>
+      </div>
+
+    </div>
+
+    <div class="container">
+      <div id="stalls"></div>
+
+      <h1>4 Stalls Available</h1>
+    </div>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-        var socket = io();
-        console.log(socket);
-        console.log('success!');
-
-        $.get('/rooms', function(data) {
-            console.log(data);
-        });
-
-        socket.on('stall_open', function(msg){
-          console.log('message from the server: ' + msg);
-          $('#TextToChange').text(msg);
-        });
-
-        socket.on('stall_close', function(msg){
-          console.log('message from the server: ' + msg);
-          $('#TextToChange').text(msg);
-        });
-
-        // if (window.webkitNotifications && navigator.userAgent.indexOf("Chrome") > -1) {
-        //   console.log("Web Notifications are supported with the WebKit API");
-        // } else if (window.Notification) {
-        //   console.log("Web Notifications are supported with the W3C/Safari API");
-        // } else {
-        //   console.log("Web Notifications are not supported in this browser");
-        // }
-
-        // if (window.Notification.permission === 'granted') {
-        //   console.log("Web Notifications are allowed");
-        // } else if (window.Notification.permission === 'default') {
-        //   console.log("Web Notifications are not allowed, need to ask permission");
-        //   console.log("Hi");
-        //   window.Notification.requestPermission(function(e) { console.log('received!');} );
-        // } else {
-        //   console.log("Web Notifications are not allowed");
-        // }
-
-    </script>
-</head>
-
-<body>
-
-<p id="TextToChange">Hello bob</p>
-
-</body>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
