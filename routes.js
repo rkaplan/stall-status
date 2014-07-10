@@ -1,19 +1,19 @@
 var models = require('./models');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 exports.getBathroomNames = function(req, res) {
-	models.Room.find({}, 'name', function(err, rooms) {
+	models.Room.find({}, function(err, rooms) {
 		if (err) {
 			res.status(500).send({error: 'Error getting bathroom names.'});
-			return;
+		} else {
+			res.status(200).send(rooms);
 		}
-		console.log(JSON.stringify(rooms));
-		res.status(200).send(rooms);
 	});
 }
 
 exports.openStall = function(req, res) {
 	models.Stall
-		.update({room_id: req['room_id'], stall_num: req['stall_num']},
+		.update({room_id: ObjectId(req.body['room_id']), stall_num: req.body['stall_num']},
 				{status: 1},
 				{multi: false},
 				function(err, numStalls, raw) {
@@ -32,8 +32,8 @@ exports.openStall = function(req, res) {
 
 exports.closeStall = function(req, res) {
 	models.Stall
-		.update({room_id: req['room_id'], stall_num: req['stall_num']},
-				{status: 0},
+		.update({room_id: ObjectId(req.body['room_id']), stall_num: req.body['stall_num']},
+				{status: -1},
 				{multi: false},
 				function(err, numStalls, raw) {
 					if (err) {
