@@ -1,6 +1,6 @@
 // Connect to MongoDB instance
 var mongoose = require('mongoose');
-var database_uri = 'mongodb://localhost'
+var database_uri = process.env.MONGOLAB_URI || 'mongodb://localhost'
 mongoose.connect(database_uri);
 
 // Insert bathroom documents
