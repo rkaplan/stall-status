@@ -3,12 +3,18 @@ var app = express();
 
 app.use(express.static(__dirname + '/public'));
 
-var io = require('socket.io');
+var server = app.listen(3000, function() {
+    console.log('Listening on port %d', server.address().port);
+});
+
+var io = require('socket.io').listen(server);
 
 app.post('/api', function(req, res) {
 	console.log('hello');
 });
 
-var server = app.listen(3000, function() {
-    console.log('Listening on port %d', server.address().port);
-});
+io.on('connection', function(socket) {
+	setInterval(function() {
+		socket.emit('hello', 'message');
+	}, 1000);
+})
