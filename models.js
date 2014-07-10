@@ -1,15 +1,17 @@
-var Mongoose = require('mongoose');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
 
-var RoomSchema = new Mongoose.Schema({
+var RoomSchema = new Schema({
 	name: String,
 	num_stalls: Number
 });
 
-var StallSchema = new Mongoose.Schema({
+var StallSchema = new Schema({
 	stall_num: Number,
 	status: Number,
-	room_id: Mongoose.Schema.ObjectID
+	room_id: ObjectId
 })
 
-exports.Room = Mongoose.model('Room', RoomSchema);
-exports.Stall = Mongoose.model('stall', StallSchema);
+exports.Room = mongoose.model('Room', RoomSchema);
+exports.Stall = mongoose.model('stall', StallSchema);

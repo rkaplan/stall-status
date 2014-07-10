@@ -15,7 +15,7 @@ var server = app.listen(3000, function() {
 });
 
 // Route to return all bathroom names
-app.get('/rooms', routes.getBathroomNames(req, res));
+app.get('/rooms', routes.getBathroomNames);
 
 // Start socket.io
 var io = require('socket.io').listen(server);

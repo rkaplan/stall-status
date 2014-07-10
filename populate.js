@@ -18,6 +18,7 @@ models.Room.create({name: 'NYC 5th Floor Men\'s', num_stalls: 4}, function(err, 
 				console.log('Error inserting stall documents!', err);
 			} else {
 				console.log('Done.');
+				mongoose.disconnect();
 			}
 		});
 	}
