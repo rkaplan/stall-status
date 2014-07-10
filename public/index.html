@@ -1,14 +1,23 @@
 <html>
 <head>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/components/socket.io-client/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
       var socket = io();
+      console.log(socket);
+      console.log('success!');
+
+      socket.on('hello', function(msg){
+        console.log('message from the server: ' + msg);
+        $('#TextToChange').text(msg);
+      });
+      
     </script>
 </head>
 
 <body>
 
-Hello bob
+<p id="TextToChange">Hello bob</p>
 
 </body>
 </html>
