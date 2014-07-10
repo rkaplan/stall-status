@@ -1,0 +1,21 @@
+{
+  "name": "stall-status",
+  "version": "0.0.0",
+  "description": "stall-status",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rkaplan/stall-status.git"
+  },
+  "author": "Russell Kaplan, Alex Grover",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rkaplan/stall-status/issues"
+  },
+  "homepage": "https://github.com/rkaplan/stall-status",
+  "dependencies": {
+    "express": "^4.5.1",
+    "mongoose": "^3.8.12",
+    "socket.io": "^1.0.6"
+  }
+}
