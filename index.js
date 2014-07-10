@@ -1,30 +1,46 @@
+// Connect to MongoDB instance
+var mongoose = require('mongoose');
+var database_uri = 'mongodb://localhost'
+mongoose.connect(database_uri);
+
+// Configure server
 var express = require('express');
 var app = express();
-
 app.use(express.static(__dirname + '/public'));
+var routes = require('./routes');
 
+// Start server on port 3000
 var server = app.listen(3000, function() {
     console.log('Listening on port %d', server.address().port);
 });
 
+// Route to return all bathroom names
+app.get('/rooms', routes.getBathroomNames);
+
+// Start socket.io
 var io = require('socket.io').listen(server);
 
-app.post('/api', function(req, res) {
-	console.log('hello');
-});
-
-app.get('/rooms', function(req, res) {
-	// send list of all bathrooms
-	res.send({status: 200, bathroom_names: ['NYC Men\'s 5th Floor', 'NYC Women\'s NYC 5th Floor']});
-});
-
 io.on('connection', function(socket) {
-	// socket.emit('room_name', )
-	setInterval(function() {
-		if (Math.random() > 0.5) {
-			socket.emit('stall_open', { stall_id : Math.floor(Math.random() * 4)})
-		} else {
-			socket.emit('stall_close', { stall_id : Math.floor(Math.random() * 4)})
+
+	// Open stall route
+	app.post('/stalls/open', function(req, res) {
+		if (routes.openStall(req, res)) {
+			socket.emit('stall_open', {stall_num: req['stall_num']});
 		}
-	}, 5000);
+	});
+
+	// Close stall route
+	app.post('/stalls/close', function(req, res) {
+		if (routes.closeStall(req, res)) {
+			socket.emit('stall_close', {stall_num: req['stall_num']});
+		}
+	});
+
+	// setInterval(function() {
+	// 	if (Math.random() > 0.5) {
+	// 		socket.emit('stall_open', {stall_id: Math.floor(Math.random() * 4)})
+	// 	} else {
+	// 		socket.emit('stall_close', {stall_id: Math.floor(Math.random() * 4)})
+	// 	}
+	// }, 5000);
 })
