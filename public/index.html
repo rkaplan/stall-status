@@ -3,15 +3,42 @@
     <script src="/components/socket.io-client/socket.io.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
-      var socket = io();
-      console.log(socket);
-      console.log('success!');
+        var socket = io();
+        console.log(socket);
+        console.log('success!');
 
-      socket.on('hello', function(msg){
-        console.log('message from the server: ' + msg);
-        $('#TextToChange').text(msg);
-      });
-      
+        $.get('/rooms', function(data) {
+            console.log(data);
+        });
+
+        socket.on('stall_open', function(msg){
+          console.log('message from the server: ' + msg);
+          $('#TextToChange').text(msg);
+        });
+
+        socket.on('stall_close', function(msg){
+          console.log('message from the server: ' + msg);
+          $('#TextToChange').text(msg);
+        });
+
+        // if (window.webkitNotifications && navigator.userAgent.indexOf("Chrome") > -1) {
+        //   console.log("Web Notifications are supported with the WebKit API");
+        // } else if (window.Notification) {
+        //   console.log("Web Notifications are supported with the W3C/Safari API");
+        // } else {
+        //   console.log("Web Notifications are not supported in this browser");
+        // }
+
+        // if (window.Notification.permission === 'granted') {
+        //   console.log("Web Notifications are allowed");
+        // } else if (window.Notification.permission === 'default') {
+        //   console.log("Web Notifications are not allowed, need to ask permission");
+        //   console.log("Hi");
+        //   window.Notification.requestPermission(function(e) { console.log('received!');} );
+        // } else {
+        //   console.log("Web Notifications are not allowed");
+        // }
+
     </script>
 </head>
 
