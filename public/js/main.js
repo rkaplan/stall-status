@@ -7,6 +7,14 @@ for (var i = 0; i < 4; i++) {
                   .attr('height', 300));
 }
 
+
+stallRects = [
+    [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
+    [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
+    [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
+    [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}]
+];
+
 // var svg = d3.select('#stalls').append('svg')
 //             .attr('width', 800)
 //             .attr('height', 400);
@@ -30,16 +38,9 @@ function setupSocketListeners() {
 
 function renderStalls() {
 
-    var stallJson = {
-        
-    }
-
-    var stallRects = [
-        [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
-        [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
-        [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
-        [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}]
-    ];
+    // var stallJson = [
+    //     {'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}
+    // ];
 
     for (var i = 0; i < 4; i++) {
         var rects = stalls[i].selectAll('rect')
