@@ -23,6 +23,7 @@ h1 {
 }
 
 .label {
+    display: none;
     position: absolute;
     color: black;
     left: 200px;
