@@ -73,7 +73,7 @@ function renderStalls() {
                               .attr('y', function (d) { return d.y; })
                               .attr('width', function (d) { return d.width; })
                               .attr('height', function (d) { return d.height; })
-                              .style('fill', function(d) { return d.color; });
+                              .style('fill', function(d) { console.log('setting color: ' + d.color); return d.color; });
 
             if (resp[i].status === 1)
               increaseFreeStalls();
