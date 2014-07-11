@@ -62,6 +62,8 @@ function renderStalls() {
 
           for (var i = 0; i < 4; i++) {
             stallRects[i].color = resp[i].status === 1 ? 'green' : 'red';
+            console.log('stallRects i color: ' + stallRects[i].color);
+            console.log(stallRects[i]);
 
             var rects = stalls[i].selectAll('rect')
                               .data(stallRects[i])
@@ -73,7 +75,7 @@ function renderStalls() {
                               .attr('y', function (d) { return d.y; })
                               .attr('width', function (d) { return d.width; })
                               .attr('height', function (d) { return d.height; })
-                              .style('fill', function(d) { console.log('setting color: ' + d.color); return d.color; });
+                              .style('fill', function(d) { console.log('the d obj is'); console.log(d); return d.color; });
 
             if (resp[i].status === 1)
               increaseFreeStalls();
