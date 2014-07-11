@@ -12,12 +12,13 @@ exports.getBathroomNames = function(req, res) {
 }
 
 exports.getBathroomStatus = function(req, res) {
-	models.Stall.find({room_id: ObjectId(req.body['room_id'])}, function(err, stalls) {
-		if (err) {
-			res.status(500).send({error: 'Error getting stall.'});
-		} else {
-			res.status(200).send(stalls);
-		}
+	models.Stall
+		.find({room_id: ObjectId(req.query['room_id'])}, {status: 1, _id: 0}, function(err, stalls) {
+			if (err) {
+				res.status(500).send({error: 'Error getting stall.'});
+			} else {
+				res.status(200).send(stalls);
+			}
 	});
 }
 
