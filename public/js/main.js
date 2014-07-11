@@ -24,7 +24,7 @@ $.get('/rooms', function(data) {
 function stallOpened(data) {
     console.log('open message from the server: ');
     console.log(data);
-    var idx = parseInt(data['stall_id']);
+    var idx = parseInt(data['stall_num']);
     stalls[idx].select('rect')
         .style('fill', 'green');
     numFreeStalls++;
@@ -34,7 +34,7 @@ function stallOpened(data) {
 function stallClosed(data) {
     console.log('close message from the server: ');
     console.log(data);
-    var idx = parseInt(data['stall_id']);
+    var idx = parseInt(data['stall_num']);
     stalls[idx].select('rect')
         .style('fill', 'red');
     numFreeStalls--;
