@@ -33,7 +33,7 @@ exports.openStall = function(req, res, callback) {
 exports.closeStall = function(req, res, callback) {
 	models.Stall
 		.update({stall_num: req.body['stall_num']},
-				{status: -1},
+				{status: 0},
 				{multi: false},
 				callback);
 }
