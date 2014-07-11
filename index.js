@@ -39,11 +39,11 @@ io.on('connection', function(socket) {
 		}
 	});
 
-	// setInterval(function() {
-	// 	if (Math.random() > 0.5) {
-	// 		socket.emit('stall_open', {stall_id: Math.floor(Math.random() * 4)})
-	// 	} else {
-	// 		socket.emit('stall_close', {stall_id: Math.floor(Math.random() * 4)})
-	// 	}
-	// }, 5000);
+	setInterval(function() {
+		if (Math.random() > .5) {
+			socket.emit('stall_open', {stall_id: Math.floor(Math.random() * 4)})
+		} else {
+			socket.emit('stall_close', {stall_id: Math.floor(Math.random() * 4)})
+		}
+	}, 2000);
 })
