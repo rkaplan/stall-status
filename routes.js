@@ -11,40 +11,28 @@ exports.getBathroomNames = function(req, res) {
 	});
 }
 
-exports.openStall = function(req, res) {
-	models.Stall
-		.update({room_id: ObjectId(req.body['room_id']), stall_num: parseInt(req.body['stall_num'])},
-				{status: 1},
-				{multi: false},
-				function(err, numStalls, raw) {
-					if (err) {
-						res.status(500).send({error: 'Error updating stall status to true!', data: raw})
-						return false;
-					}
-					if (numStalls !== 1) {
-						res.status(400).send({error: 'Stall not found: updating status to true.', data: raw})
-						return false;
-					}
-					res.status(200).send({ok: 1});
-					return true;
-				});
+exports.getBathroomStatus = function(req, res) {
+	models.Stall.find({room_id: ObjectId(req.body['room_id'])}, function(err, stalls) {
+		if (err) {
+			res.status(500).send({error: 'Error getting stall.'});
+		} else {
+			res.status(200).send(stalls);
+		}
+	});
 }
 
-exports.closeStall = function(req, res) {
+exports.openStall = function(req, res, callback) {
+	models.Stall
+		.update({room_id: ObjectId(req.body['room_id']), stall_num: req.body['stall_num']},
+				{status: 1},
+				{multi: false},
+				callback);
+}
+
+exports.closeStall = function(req, res, callback) {
 	models.Stall
 		.update({room_id: ObjectId(req.body['room_id']), stall_num: req.body['stall_num']},
 				{status: -1},
 				{multi: false},
-				function(err, numStalls, raw) {
-					if (err) {
-						res.status(500).send({error: 'Error updating stall status to false!', data: raw})
-						return false;
-					}
-					if (numStalls !== 1) {
-						res.status(400).send({error: 'Stall not found: updating status to false.', data: raw})
-						return false;
-					}
-					res.status(200).send({ok: 1});
-					return true;
-				});
+				callback);
 }
