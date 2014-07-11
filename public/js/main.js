@@ -1,7 +1,13 @@
 var socket = io();
 var bathrooms;
-var stalls = [];
+var stalls;
 var numFreeStalls = 0;
+
+function setStallColor(stallNum, color) {
+  $(stalls[stallNum])
+      .attr('stroke', color)
+      .attr('fill', color)
+}
 
 function increaseFreeStalls() {
   if (numFreeStalls < 4)
@@ -15,25 +21,24 @@ function decreaseFreeStalls() {
   $('#numStalls').text(numFreeStalls);
 }
 
-for (var i = 0; i < 4; i++) {
-    stalls.push(d3.select('#stalls').append('svg')
-                  .attr('width', 250)
-                  .attr('height', 300));
-}
+// for (var i = 0; i < 4; i++) {
+//     stalls.push(d3.select('#stalls').append('svg')
+//                   .attr('width', 250)
+//                   .attr('height', 300));
+// }
 
-stallRects = [
-    [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
-    [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
-    [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
-    [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}]
-];
+// stallRects = [
+//     [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
+//     [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
+//     [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
+//     [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}]
+// ];
 
 function stallOpened(data) {
     console.log('open message from the server: ');
     console.log(data);
     var idx = parseInt(data['stall_num']);
-    stalls[idx].select('rect')
-        .style('fill', 'green');
+    setStallColor(idx, 'green');
     increaseFreeStalls();
 }
 
@@ -41,8 +46,7 @@ function stallClosed(data) {
     console.log('close message from the server: ');
     console.log(data);
     var idx = parseInt(data['stall_num']);
-    stalls[idx].select('rect')
-        .style('fill', 'red');
+    setStallColor(idx, 'red');
     decreaseFreeStalls();
 }
 
@@ -52,6 +56,8 @@ function setupSocketListeners() {
 }
 
 function renderStalls() {
+    stalls = $('.stallSvg');
+
     $.get('/rooms', function(data) {
       console.log(data);
       bathrooms = data;
@@ -61,22 +67,23 @@ function renderStalls() {
           console.log(resp);
 
           for (var i = 0; i < 4; i++) {
-            stallRects[i][0].color = resp[i].status === 1 ? 'green' : 'red';
-
-            var rects = stalls[i].selectAll('rect')
-                              .data(stallRects[i])
-                              .enter()
-                              .append('rect');
-
-            var rectAttrs = rects
-                              .attr('x', function (d) { return d.x; })
-                              .attr('y', function (d) { return d.y; })
-                              .attr('width', function (d) { return d.width; })
-                              .attr('height', function (d) { return d.height; })
-                              .style('fill', function(d) { return d.color; });
-
+            var colorToSet = resp[i].status === 1 ? 'green' : 'red';
+            setStallColor(i, colorToSet);
             if (resp[i].status === 1)
               increaseFreeStalls();
+
+            // var rects = stalls[i].selectAll('rect')
+            //                   .data(stallRects[i])
+            //                   .enter()
+            //                   .append('rect');
+
+            // var rectAttrs = rects
+            //                   .attr('x', function (d) { return d.x; })
+            //                   .attr('y', function (d) { return d.y; })
+            //                   .attr('width', function (d) { return d.width; })
+            //                   .attr('height', function (d) { return d.height; })
+            //                   .style('fill', function(d) { return d.color; });
+
           }
       });
   });
