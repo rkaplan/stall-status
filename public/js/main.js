@@ -4,9 +4,12 @@ var stalls;
 var numFreeStalls = 0;
 
 function setStallColor(stallNum, color) {
-  $(stalls[stallNum])
+  var svg = $(stalls[stallNum]);
+  svg.find('line')
+      .attr('stroke', color);
+  svg.find('path')
       .attr('stroke', color)
-      .attr('fill', color)
+      .attr('fill', color);
 }
 
 function increaseFreeStalls() {
