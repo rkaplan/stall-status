@@ -13,7 +13,7 @@ exports.getBathroomNames = function(req, res) {
 
 exports.getBathroomStatus = function(req, res) {
 	models.Stall
-		.find({room_id: ObjectId(req.query['room_id'])}, {status: 1, _id: 0}, function(err, stalls) {
+		.find({}, {status: 1, _id: 0}, function(err, stalls) {
 			if (err) {
 				res.status(500).send({error: 'Error getting stall.'});
 			} else {
@@ -24,7 +24,7 @@ exports.getBathroomStatus = function(req, res) {
 
 exports.openStall = function(req, res, callback) {
 	models.Stall
-		.update({room_id: ObjectId(req.body['room_id']), stall_num: req.body['stall_num']},
+		.update({ stall_num: req.body['stall_num']},
 				{status: 1},
 				{multi: false},
 				callback);
@@ -32,7 +32,7 @@ exports.openStall = function(req, res, callback) {
 
 exports.closeStall = function(req, res, callback) {
 	models.Stall
-		.update({room_id: ObjectId(req.body['room_id']), stall_num: req.body['stall_num']},
+		.update(stall_num: req.body['stall_num']},
 				{status: -1},
 				{multi: false},
 				callback);
