@@ -3,6 +3,18 @@ var bathrooms;
 var stalls = [];
 var numFreeStalls = 4;
 
+function increaseFreeStalls() {
+  if (numFreeStalls < 4)
+    numFreeStalls++;
+  $('#numStalls').text(numFreeStalls);
+}
+
+function decreaseFreeStalls() {
+  if (numFreeStalls > 0)
+    numFreeStalls--;
+  $('#numStalls').text(numFreeStalls);
+}
+
 for (var i = 0; i < 4; i++) {
     stalls.push(d3.select('#stalls').append('svg')
                   .attr('width', 250)
@@ -31,8 +43,7 @@ function stallOpened(data) {
     var idx = parseInt(data['stall_num']);
     stalls[idx].select('rect')
         .style('fill', 'green');
-    numFreeStalls++;
-    $('#numStalls').text(numFreeStalls);
+    increaseFreeStalls();
 }
 
 function stallClosed(data) {
@@ -41,8 +52,7 @@ function stallClosed(data) {
     var idx = parseInt(data['stall_num']);
     stalls[idx].select('rect')
         .style('fill', 'red');
-    numFreeStalls--;
-    $('#numStalls').text(numFreeStalls);
+    decreaseFreeStalls();
 }
 
 function setupSocketListeners() {
@@ -51,10 +61,6 @@ function setupSocketListeners() {
 }
 
 function renderStalls() {
-
-    // var stallJson = [
-    //     {'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}
-    // ];
 
     for (var i = 0; i < 4; i++) {
         var rects = stalls[i].selectAll('rect')
