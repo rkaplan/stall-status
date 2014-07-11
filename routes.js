@@ -24,7 +24,7 @@ exports.getBathroomStatus = function(req, res) {
 
 exports.openStall = function(req, res, callback) {
 	models.Stall
-		.update({ stall_num: req.body['stall_num']},
+		.update({stall_num: req.body['stall_num']},
 				{status: 1},
 				{multi: false},
 				callback);
@@ -32,7 +32,7 @@ exports.openStall = function(req, res, callback) {
 
 exports.closeStall = function(req, res, callback) {
 	models.Stall
-		.update(stall_num: req.body['stall_num']},
+		.update({stall_num: req.body['stall_num']},
 				{status: -1},
 				{multi: false},
 				callback);
