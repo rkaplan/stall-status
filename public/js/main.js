@@ -1,12 +1,13 @@
 var socket = io();
 var bathrooms;
 var stalls = [];
+var numFreeStalls = 4;
+
 for (var i = 0; i < 4; i++) {
     stalls.push(d3.select('#stalls').append('svg')
                   .attr('width', 250)
                   .attr('height', 300));
 }
-
 
 stallRects = [
     [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}],
@@ -20,16 +21,29 @@ $.get('/rooms', function(data) {
     bathrooms = data['bathroom_names'];
 });
 
-function setupSocketListeners() {
-    socket.on('stall_open', function(msg){
-      console.log('message from the server: ');
-      console.log(msg);
-    });
+function stallOpened(data) {
+    console.log('open message from the server: ');
+    console.log(data);
+    var idx = parseInt(data['stall_id']);
+    stalls[idx].select('rect')
+        .style('fill', 'green');
+    numFreeStalls++;
+    $('#numStalls').text(numFreeStalls);
+}
 
-    socket.on('stall_close', function(msg){
-      console.log('message from the server: ');
-      console.log(msg);
-    });
+function stallClosed(data) {
+    console.log('close message from the server: ');
+    console.log(data);
+    var idx = parseInt(data['stall_id']);
+    stalls[idx].select('rect')
+        .style('fill', 'red');
+    numFreeStalls--;
+    $('#numStalls').text(numFreeStalls);
+}
+
+function setupSocketListeners() {
+    socket.on('stall_open', stallOpened);
+    socket.on('stall_close', stallClosed);
 }
 
 function renderStalls() {
