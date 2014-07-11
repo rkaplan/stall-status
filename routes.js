@@ -21,7 +21,7 @@ exports.openStall = function(req, res) {
 						res.status(500).send({error: 'Error updating stall status to true!', data: raw})
 						return false;
 					}
-					if (numStalls != 1) {
+					if (numStalls !== 1) {
 						res.status(400).send({error: 'Stall not found: updating status to true.', data: raw})
 						return false;
 					}
@@ -40,7 +40,7 @@ exports.closeStall = function(req, res) {
 						res.status(500).send({error: 'Error updating stall status to false!', data: raw})
 						return false;
 					}
-					if (numStalls != 1) {
+					if (numStalls !== 1) {
 						res.status(400).send({error: 'Stall not found: updating status to false.', data: raw})
 						return false;
 					}

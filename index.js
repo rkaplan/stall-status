@@ -23,27 +23,19 @@ app.get('/rooms', routes.getBathroomNames);
 // Start socket.io
 var io = require('socket.io').listen(server);
 
-io.on('connection', function(socket) {
+// Open stall route
+app.post('/stalls/open', function(req, res) {
+	console.log('opening: ', req.body);
+	if (routes.openStall(req, res)) {
+		io.emit('stall_open', {stall_num: req['stall_num']});
+	}
+});
 
-	// Open stall route
-	app.post('/stalls/open', function(req, res) {
-		if (routes.openStall(req, res)) {
-			socket.emit('stall_open', {stall_num: req['stall_num']});
-		}
-	});
-
-	// Close stall route
-	app.post('/stalls/close', function(req, res) {
-		if (routes.closeStall(req, res)) {
-			socket.emit('stall_close', {stall_num: req['stall_num']});
-		}
-	});
-
-	// setInterval(function() {
-	// 	if (Math.random() > 0.5) {
-	// 		socket.emit('stall_open', {stall_id: Math.floor(Math.random() * 4)})
-	// 	} else {
-	// 		socket.emit('stall_close', {stall_id: Math.floor(Math.random() * 4)})
-	// 	}
-	// }, 5000);
-})
+// Close stall route
+app.post('/stalls/close', function(req, res) {
+	console.log('closing: ', req.body);
+	io.emit('stall_close', {stall_num: req['stall_num']});
+	if (routes.closeStall(req, res)) {
+		io.emit('stall_close', {stall_num: req['stall_num']});
+	}
+});
