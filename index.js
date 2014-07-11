@@ -30,6 +30,7 @@ var io = require('socket.io').listen(server);
 app.post('/stalls/open', function(req, res) {
 	console.log('opening: ', req.body);
 	routes.openStall(req, res, function(err, numStalls, raw) {
+		console.log(raw);
 		if (err) {
 			res.status(500).send({error: 'Error updating stall status to open!', data: raw})
 			return;
@@ -38,7 +39,7 @@ app.post('/stalls/open', function(req, res) {
 			res.status(400).send({error: 'Stall not found: updating status to open.', data: raw})
 			return;
 		}
-		io.emit('stall_open', {stall_num: req.body['stall_num']});
+		if (raw.nModified === 1) io.emit('stall_open', {stall_num: req.body['stall_num']});
 		res.status(200).send({ok: 1});
 	});
 });
@@ -47,6 +48,7 @@ app.post('/stalls/open', function(req, res) {
 app.post('/stalls/close', function(req, res) {
 	console.log('closing: ', req.body);
 	routes.closeStall(req, res, function(err, numStalls, raw) {
+		console.log(raw);
 		if (err) {
 			res.status(500).send({error: 'Error updating stall status to closed!', data: raw})
 			return;
@@ -55,7 +57,7 @@ app.post('/stalls/close', function(req, res) {
 			res.status(400).send({error: 'Stall not found: updating status to closed.', data: raw})
 			return;
 		}
-		io.emit('stall_close', {stall_num: req.body['stall_num']});
+		if (raw.nModified === 1) io.emit('stall_close', {stall_num: req.body['stall_num']});
 		res.status(200).send({ok: 1});
 	});
 });
