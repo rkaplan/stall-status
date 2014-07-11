@@ -1,7 +1,7 @@
 var socket = io();
 var bathrooms;
 var stalls = [];
-var numFreeStalls = 4;
+var numFreeStalls = 0;
 
 function increaseFreeStalls() {
   if (numFreeStalls < 4)
@@ -28,15 +28,6 @@ stallRects = [
     [{'x': 25, 'y': 0, 'width': 200, 'height': 250, 'color': 'green'}]
 ];
 
-$.get('/rooms', function(data) {
-    console.log(data);
-    bathrooms = data;
-
-    $.get('/rooms/status', {room_id: bathrooms[0]['_id']}, function(resp) {
-        console.log(resp);
-    })
-});
-
 function stallOpened(data) {
     console.log('open message from the server: ');
     console.log(data);
@@ -61,20 +52,34 @@ function setupSocketListeners() {
 }
 
 function renderStalls() {
+    $.get('/rooms', function(data) {
+      console.log(data);
+      bathrooms = data;
 
-    for (var i = 0; i < 4; i++) {
-        var rects = stalls[i].selectAll('rect')
-                          .data(stallRects[i])
-                          .enter()
-                          .append('rect');
+      $.get('/rooms/status', {room_id: bathrooms[0]['_id']}, function(resp) {
+          console.log('this is the setup obj from server:');
+          console.log(resp);
 
-        var rectAttrs = rects
-                          .attr('x', function (d) { return d.x; })
-                          .attr('y', function (d) { return d.y; })
-                          .attr('width', function (d) { return d.width; })
-                          .attr('height', function (d) { return d.height; })
-                          .style('fill', function(d) { return d.color; });
-    }
+          for (var i = 0; i < 4; i++) {
+            stallRects[i].color = resp[i].status === 1 ? 'green' : 'red';
+
+            var rects = stalls[i].selectAll('rect')
+                              .data(stallRects[i])
+                              .enter()
+                              .append('rect');
+
+            var rectAttrs = rects
+                              .attr('x', function (d) { return d.x; })
+                              .attr('y', function (d) { return d.y; })
+                              .attr('width', function (d) { return d.width; })
+                              .attr('height', function (d) { return d.height; })
+                              .style('fill', function(d) { return d.color; });
+
+            if (resp[i].status === 1)
+              increaseFreeStalls();
+          }
+      });
+  });
 }
 
 setupSocketListeners();
