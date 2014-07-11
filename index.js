@@ -1,6 +1,6 @@
 // Connect to MongoDB instance
 var mongoose = require('mongoose');
-var database_uri = 'mongodb://localhost'
+var database_uri = process.env.MONGOLAB_URI || 'mongodb://localhost'
 mongoose.connect(database_uri);
 
 // Configure server
@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/public'));
 var routes = require('./routes');
 
 // Start server on port 3000
-var server = app.listen(3000, function() {
+var server = app.listen(process.env.PORT || 3000, function() {
     console.log('Listening on port %d', server.address().port);
 });
 
