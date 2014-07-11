@@ -18,7 +18,11 @@ stallRects = [
 
 $.get('/rooms', function(data) {
     console.log(data);
-    bathrooms = data['bathroom_names'];
+    bathrooms = data;
+
+    $.get('/rooms/status', {room_id: bathrooms[0]['_id']}, function(resp) {
+        console.log(resp);
+    })
 });
 
 function stallOpened(data) {
