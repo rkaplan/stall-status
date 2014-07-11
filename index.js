@@ -35,11 +35,9 @@ app.post('/stalls/open', function(req, res) {
 			res.status(500).send({error: 'Error updating stall status to open!', data: raw})
 			return;
 		}
-		// if (numStalls !== 1) {
-		// 	res.status(400).send({error: 'Stall not found: updating status to open.', data: raw})
-		// 	return;
-		// }
-		if (numStalls === 1) io.emit('stall_open', {stall_num: req.body['stall_num']});
+		if (numStalls === 1) {
+			io.emit('stall_open', {stall_num: req.body['stall_num']});
+		}
 		res.status(200).send({ok: 1});
 	});
 });
@@ -53,11 +51,9 @@ app.post('/stalls/close', function(req, res) {
 			res.status(500).send({error: 'Error updating stall status to closed!', data: raw})
 			return;
 		}
-		// if (numStalls !== 1) {
-		// 	res.status(400).send({error: 'Stall not found: updating status to closed.', data: raw})
-		// 	return;
-		// }
-		if (numStalls === 1) io.emit('stall_close', {stall_num: req.body['stall_num']});
+		if (numStalls === 1) {
+			io.emit('stall_close', {stall_num: req.body['stall_num']});
+		}
 		res.status(200).send({ok: 1});
 	});
 });
