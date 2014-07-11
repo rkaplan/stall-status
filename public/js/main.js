@@ -12,16 +12,24 @@ function setStallColor(stallNum, color) {
       .attr('fill', color);
 }
 
+function changeText() {
+  $('#numStalls').text(numFreeStalls);
+  if (numFreeStalls === 1)
+    $('#plurality').text('');
+  else
+    $('#plurality').text('s');
+}
+
 function increaseFreeStalls() {
   if (numFreeStalls < 4)
     numFreeStalls++;
-  $('#numStalls').text(numFreeStalls);
+  changeText();
 }
 
 function decreaseFreeStalls() {
   if (numFreeStalls > 0)
     numFreeStalls--;
-  $('#numStalls').text(numFreeStalls);
+  changeText();
 }
 
 // for (var i = 0; i < 4; i++) {
