@@ -61,7 +61,7 @@ function renderStalls() {
           console.log(resp);
 
           for (var i = 0; i < 4; i++) {
-            stallRects[i].color = resp[i].status === 1 ? 'green' : 'red';
+            stallRects[i][0].color = resp[i].status === 1 ? 'green' : 'red';
 
             var rects = stalls[i].selectAll('rect')
                               .data(stallRects[i])
