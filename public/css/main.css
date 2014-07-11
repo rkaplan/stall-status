@@ -21,3 +21,16 @@ h1 {
     margin: 0 auto;
     padding-bottom: 20px;
 }
+
+.label {
+    position: absolute;
+    color: black;
+    left: 200px;
+    top: 430px;
+}
+
+.label span {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+}
