@@ -13,7 +13,7 @@ exports.getBathroomNames = function(req, res) {
 
 exports.openStall = function(req, res) {
 	models.Stall
-		.update({room_id: ObjectId(req.body['room_id']), stall_num: req.body['stall_num']},
+		.update({room_id: ObjectId(req.body['room_id']), stall_num: parseInt(req.body['stall_num'])},
 				{status: 1},
 				{multi: false},
 				function(err, numStalls, raw) {
